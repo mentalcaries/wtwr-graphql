@@ -45,8 +45,8 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Clothing: { // root type
+    _id: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: number; // Int!
     imageUrl: string; // String!
     isLiked: boolean; // Boolean!
     name: string; // String!
@@ -69,8 +69,8 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 
 export interface NexusGenFieldTypes {
   Clothing: { // field return type
+    _id: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: number; // Int!
     imageUrl: string; // String!
     isLiked: boolean; // Boolean!
     name: string; // String!
@@ -85,8 +85,8 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   Clothing: { // field return type name
+    _id: 'String'
     createdAt: 'DateTime'
-    id: 'Int'
     imageUrl: 'String'
     isLiked: 'Boolean'
     name: 'String'
