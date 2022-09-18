@@ -45,15 +45,12 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Clothing: { // root type
-    _id: string; // String!
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
     imageUrl: string; // String!
-    isLiked: boolean; // Boolean!
     name: string; // String!
-    owner: string; // String!
     type: NexusGenEnums['ClothingType']; // ClothingType!
     weather: string; // String!
   }
+  Mutation: {};
   Query: {};
 }
 
@@ -69,14 +66,13 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 
 export interface NexusGenFieldTypes {
   Clothing: { // field return type
-    _id: string; // String!
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
     imageUrl: string; // String!
-    isLiked: boolean; // Boolean!
     name: string; // String!
-    owner: string; // String!
     type: NexusGenEnums['ClothingType']; // ClothingType!
     weather: string; // String!
+  }
+  Mutation: { // field return type
+    add: NexusGenRootTypes['Clothing']; // Clothing!
   }
   Query: { // field return type
     data: NexusGenRootTypes['Clothing'][]; // [Clothing!]!
@@ -85,14 +81,13 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   Clothing: { // field return type name
-    _id: 'String'
-    createdAt: 'DateTime'
     imageUrl: 'String'
-    isLiked: 'Boolean'
     name: 'String'
-    owner: 'String'
     type: 'ClothingType'
     weather: 'String'
+  }
+  Mutation: { // field return type name
+    add: 'Clothing'
   }
   Query: { // field return type name
     data: 'Clothing'
@@ -100,6 +95,14 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    add: { // args
+      imageUrl: string; // String!
+      name: string; // String!
+      type: NexusGenEnums['ClothingType']; // ClothingType!
+      weather: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {

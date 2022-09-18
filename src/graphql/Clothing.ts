@@ -1,5 +1,11 @@
-import { enumType, extendType, objectType } from 'nexus';
-import { NexusGenObjects } from '../../nexus-typegen';
+import {
+  enumType,
+  extendType,
+  nonNull,
+  objectType,
+  stringArg,
+} from 'nexus';
+import { clothes } from './test';
 
 export const ClothingType = enumType({
   name: 'ClothingType',
@@ -24,44 +30,19 @@ export const ClothingType = enumType({
 export const Clothing = objectType({
   name: 'Clothing',
   definition(t) {
-    t.nonNull.string('_id');
+    // t.nonNull.string('_id');
     t.nonNull.string('name');
     t.nonNull.string('weather');
     t.nonNull.string('imageUrl');
-    t.nonNull.boolean('isLiked');
-    t.nonNull.dateTime('createdAt');
+    // t.nonNull.boolean('isLiked');
+    // t.nonNull.dateTime('createdAt');
     t.nonNull.field('type', { type: ClothingType });
-    t.nonNull.string('owner');
+    // t.nonNull.string('owner');
     // need to link owner
   },
 });
 
-let clothes: NexusGenObjects['Clothing'][] = [
-  {
-    _id: '6325ba3b9502a6d981bad30f',
-    name: 'Tshirt',
-    type: 't_shirt',
-    weather: 'warm',
-    imageUrl:
-      'https://lavogueco.com/wp-content/uploads/2022/05/17135635_hi.jpg',
-    owner: '62ec4e85bb4f0997c98dfb3d',
-    isLiked: false,
-    createdAt: '2022-08-05T09:59:22.358Z',
-    __v: 0,
-  },
-  {
-    _id: '6325ba619502a6d981bad311',
-    name: 'ST Pants',
-    type: 'sport_pants',
-    weather: 'warm',
-    imageUrl:
-      'https://d3nt9em9l1urz8.cloudfront.net/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/n/i/nicq3656-419.jpg',
-    owner: '62ec4e85bb4f0997c98dfb3d',
-    isLiked: false,
-    createdAt: '2022-08-05T09:59:22.358Z',
-    __v: 0,
-  },
-];
+// get clothing items
 
 export const ClothingQuery = extendType({
   type: 'Query',
@@ -70,6 +51,39 @@ export const ClothingQuery = extendType({
       type: 'Clothing',
       resolve(parent, args, context, info) {
         return clothes;
+      },
+    });
+  },
+});
+
+// new item
+// edit/update item
+// delete item
+
+export const ClothingMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('add', {
+      type: 'Clothing',
+      args: {
+        // name, type, weather, imageUrl
+        name: nonNull(stringArg()),
+        type: nonNull(ClothingType),
+        weather: nonNull(stringArg()),
+        imageUrl: nonNull(stringArg()),
+      },
+
+      resolve(parent, args, context) {
+        const { name, type, weather, imageUrl } = args;
+
+        const newClothingItem = {
+          name,
+          type,
+          weather,
+          imageUrl,
+        };
+        clothes.push(newClothingItem);
+        return newClothingItem;
       },
     });
   },
