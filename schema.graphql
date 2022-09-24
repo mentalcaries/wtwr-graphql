@@ -3,10 +3,7 @@
 
 
 type Clothing {
-  _id: ID!
-  createdAt: DateTime
   imageUrl: String!
-  isLiked: Boolean
   name: String!
   owner: String!
   type: ClothingType!
@@ -40,5 +37,5 @@ type Mutation {
 }
 
 type Query {
-  data: [Clothing!]!
+  allItems: [Clothing!]!
 }

@@ -1,5 +1,4 @@
 import { enumType, extendType, nonNull, objectType, stringArg } from 'nexus';
-import { clothes } from './test';
 
 export const ClothingType = enumType({
   name: 'ClothingType',
@@ -24,14 +23,11 @@ export const ClothingType = enumType({
 export const Clothing = objectType({
   name: 'Clothing',
   definition(t) {
-    t.nonNull.id('_id');
     t.nonNull.string('name');
+    t.nonNull.string('owner');
     t.nonNull.string('weather');
     t.nonNull.string('imageUrl');
-    t.boolean('isLiked');
-    t.dateTime('createdAt');
     t.nonNull.field('type', { type: ClothingType });
-    t.nonNull.string('owner');
     // need to link owner
   },
 });
@@ -41,11 +37,11 @@ export const Clothing = objectType({
 export const ClothingQuery = extendType({
   type: 'Query',
   definition(t) {
-    t.nonNull.list.nonNull.field('data', {
+    t.nonNull.list.nonNull.field('allItems', {
       type: 'Clothing',
-      resolve(parent, args, context, info) {
-        return clothes;
-      },
+      resolve(parent, args, context) {
+        return context.prisma.items.findMany()
+      }
     });
   },
 });
