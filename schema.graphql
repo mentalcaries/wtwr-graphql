@@ -3,8 +3,12 @@
 
 
 type Clothing {
+  _id: ID!
+  createdAt: DateTime
   imageUrl: String!
+  isLiked: Boolean
   name: String!
+  owner: String!
   type: ClothingType!
   weather: String!
 }

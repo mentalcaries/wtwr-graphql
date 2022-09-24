@@ -1,10 +1,4 @@
-import {
-  enumType,
-  extendType,
-  nonNull,
-  objectType,
-  stringArg,
-} from 'nexus';
+import { enumType, extendType, nonNull, objectType, stringArg } from 'nexus';
 import { clothes } from './test';
 
 export const ClothingType = enumType({
@@ -30,14 +24,14 @@ export const ClothingType = enumType({
 export const Clothing = objectType({
   name: 'Clothing',
   definition(t) {
-    // t.nonNull.string('_id');
+    t.nonNull.id('_id');
     t.nonNull.string('name');
     t.nonNull.string('weather');
     t.nonNull.string('imageUrl');
-    // t.nonNull.boolean('isLiked');
-    // t.nonNull.dateTime('createdAt');
+    t.boolean('isLiked');
+    t.dateTime('createdAt');
     t.nonNull.field('type', { type: ClothingType });
-    // t.nonNull.string('owner');
+    t.nonNull.string('owner');
     // need to link owner
   },
 });
@@ -66,7 +60,6 @@ export const ClothingMutation = extendType({
     t.nonNull.field('add', {
       type: 'Clothing',
       args: {
-        // name, type, weather, imageUrl
         name: nonNull(stringArg()),
         type: nonNull(ClothingType),
         weather: nonNull(stringArg()),
@@ -86,5 +79,15 @@ export const ClothingMutation = extendType({
         return newClothingItem;
       },
     });
+    // t.nonNull.field('edit', {
+    //   type: 'Clothing',
+    //   args: {
+    //     name: nonNull(stringArg()),
+    //     type: nonNull(ClothingType),
+    //     weather: nonNull(stringArg()),
+    //     imageUrl: nonNull(stringArg()),
+    //   },
+    //   resolve(parent, args, context) {},
+    // });
   },
 });
