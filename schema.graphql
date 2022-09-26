@@ -33,7 +33,7 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTime
 
 type Mutation {
-  add(imageUrl: String!, name: String!, type: ClothingType!, weather: String!): Clothing!
+  createItem(imageUrl: String!, name: String!, owner: String!, type: ClothingType!, weather: String!): Clothing!
 }
 
 type Query {

@@ -75,7 +75,7 @@ export interface NexusGenFieldTypes {
     weather: string; // String!
   }
   Mutation: { // field return type
-    add: NexusGenRootTypes['Clothing']; // Clothing!
+    createItem: NexusGenRootTypes['Clothing']; // Clothing!
   }
   Query: { // field return type
     allItems: NexusGenRootTypes['Clothing'][]; // [Clothing!]!
@@ -91,7 +91,7 @@ export interface NexusGenFieldTypeNames {
     weather: 'String'
   }
   Mutation: { // field return type name
-    add: 'Clothing'
+    createItem: 'Clothing'
   }
   Query: { // field return type name
     allItems: 'Clothing'
@@ -100,9 +100,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    add: { // args
+    createItem: { // args
       imageUrl: string; // String!
       name: string; // String!
+      owner: string; // String!
       type: NexusGenEnums['ClothingType']; // ClothingType!
       weather: string; // String!
     }

@@ -53,25 +53,23 @@ export const ClothingQuery = extendType({
 export const ClothingMutation = extendType({
   type: 'Mutation',
   definition(t) {
-    t.nonNull.field('add', {
+    t.nonNull.field('createItem', {
       type: 'Clothing',
       args: {
         name: nonNull(stringArg()),
         type: nonNull(ClothingType),
         weather: nonNull(stringArg()),
         imageUrl: nonNull(stringArg()),
+        owner: nonNull(stringArg())
       },
 
       resolve(parent, args, context) {
-        const { name, type, weather, imageUrl } = args;
+        const { name, type, weather, imageUrl, owner } = args;
 
-        const newClothingItem = {
-          name,
-          type,
-          weather,
-          imageUrl,
-        };
-        clothes.push(newClothingItem);
+        const newClothingItem = 
+        context.prisma.items.create({
+           data: { name, type, weather, imageUrl, owner }
+        })
         return newClothingItem;
       },
     });
