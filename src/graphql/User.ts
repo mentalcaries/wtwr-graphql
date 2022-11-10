@@ -1,4 +1,4 @@
-import { enumType, objectType } from "nexus";
+import { enumType, extendType, objectType } from "nexus";
 
 export const TemperatureUnit = enumType({
   name: 'TemperatureUnit',
@@ -16,5 +16,19 @@ export const User = objectType({
     t.list.field('preferences',{
       type: "ClothingType"
     })
+    t.nonNull.list.field('items', {
+      type: 'ClothingItem',
+      resolve(parent, args, context){
+        return context.prisma.user.findUnique({ where: { id: parent.id as string}}).items()
+      }
+    })
+
   },
 })
+
+// export const UserMutation = extendType({
+//   type:'Mutation',
+//   definition(t) {
+//     t.nonNull.field('')
+//   },
+// })

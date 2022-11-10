@@ -2,6 +2,11 @@
 ### Do not make changes to this file directly
 
 
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
 type ClothingItem {
   id: ID!
   imageUrl: String!
@@ -37,6 +42,7 @@ scalar DateTime
 
 type Mutation {
   createItem(imageUrl: String!, name: String!, ownerId: String!, type: ClothingType!, weather: String!): ClothingItem!
+  signup(avatar: String!, email: String!, name: String!, password: String!, preferences: [String]!): AuthPayload!
 }
 
 type Query {
@@ -52,6 +58,7 @@ type User {
   avatar: String
   email: String!
   id: ID
+  items: [ClothingItem]!
   name: String
   preferences: [ClothingType]
   temperatureSelection: TemperatureUnit!

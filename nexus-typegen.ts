@@ -46,6 +46,10 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  AuthPayload: { // root type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   ClothingItem: { // root type
     id: string; // ID!
     imageUrl: string; // String!
@@ -78,6 +82,10 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  AuthPayload: { // field return type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   ClothingItem: { // field return type
     id: string; // ID!
     imageUrl: string; // String!
@@ -90,6 +98,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createItem: NexusGenRootTypes['ClothingItem']; // ClothingItem!
+    signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
   }
   Query: { // field return type
     allItems: NexusGenRootTypes['ClothingItem'][]; // [ClothingItem!]!
@@ -98,6 +107,7 @@ export interface NexusGenFieldTypes {
     avatar: string | null; // String
     email: string; // String!
     id: string | null; // ID
+    items: Array<NexusGenRootTypes['ClothingItem'] | null>; // [ClothingItem]!
     name: string | null; // String
     preferences: Array<NexusGenEnums['ClothingType'] | null> | null; // [ClothingType]
     temperatureSelection: NexusGenEnums['TemperatureUnit']; // TemperatureUnit!
@@ -105,6 +115,10 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  AuthPayload: { // field return type name
+    token: 'String'
+    user: 'User'
+  }
   ClothingItem: { // field return type name
     id: 'ID'
     imageUrl: 'String'
@@ -117,6 +131,7 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createItem: 'ClothingItem'
+    signup: 'AuthPayload'
   }
   Query: { // field return type name
     allItems: 'ClothingItem'
@@ -125,6 +140,7 @@ export interface NexusGenFieldTypeNames {
     avatar: 'String'
     email: 'String'
     id: 'ID'
+    items: 'ClothingItem'
     name: 'String'
     preferences: 'ClothingType'
     temperatureSelection: 'TemperatureUnit'
@@ -139,6 +155,13 @@ export interface NexusGenArgTypes {
       ownerId: string; // String!
       type: NexusGenEnums['ClothingType']; // ClothingType!
       weather: string; // String!
+    }
+    signup: { // args
+      avatar: string; // String!
+      email: string; // String!
+      name: string; // String!
+      password: string; // String!
+      preferences: Array<string | null>; // [String]!
     }
   }
 }
