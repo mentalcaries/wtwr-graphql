@@ -20,15 +20,24 @@ export const ClothingType = enumType({
   ],
 });
 
-export const Clothing = objectType({
-  name: 'Clothing',
+export const ClothingItem = objectType({
+  name: 'ClothingItem',
   definition(t) {
+    t.nonNull.id('id');
     t.nonNull.string('name');
-    t.nonNull.string('owner');
     t.nonNull.string('weather');
     t.nonNull.string('imageUrl');
     t.nonNull.field('type', { type: ClothingType });
-    // need to link owner
+    t.boolean('isLiked');
+    t.nonNull.string('ownerId');
+    t.field('owner', {
+      type: "User",
+      resolve(parent, args, context) {
+        return context.prisma.user.findUnique({
+          where: { id: parent.ownerId },
+        });
+      },
+    });
   },
 });
 
@@ -38,43 +47,39 @@ export const ClothingQuery = extendType({
   type: 'Query',
   definition(t) {
     t.nonNull.list.nonNull.field('allItems', {
-      type: 'Clothing',
+      type: 'ClothingItem',
       resolve(parent, args, context) {
-        return context.prisma.items.findMany()
-      }
+        return context.prisma.clothingItem.findMany({});
+      },
     });
   },
 });
 
-// new item
-// edit/update item
-// delete item
 
 export const ClothingMutation = extendType({
   type: 'Mutation',
   definition(t) {
     t.nonNull.field('createItem', {
-      type: 'Clothing',
+      type: 'ClothingItem',
       args: {
         name: nonNull(stringArg()),
         type: nonNull(ClothingType),
         weather: nonNull(stringArg()),
         imageUrl: nonNull(stringArg()),
-        owner: nonNull(stringArg())
+        ownerId: nonNull(stringArg()),
       },
 
       resolve(parent, args, context) {
-        const { name, type, weather, imageUrl, owner } = args;
+        const { name, type, weather, imageUrl, ownerId } = args;
 
-        const newClothingItem = 
-        context.prisma.items.create({
-           data: { name, type, weather, imageUrl, owner }
-        })
+        const newClothingItem = context.prisma.clothingItem.create({
+          data: { name, type, weather, imageUrl, ownerId },
+        });
         return newClothingItem;
       },
     });
     // t.nonNull.field('edit', {
-    //   type: 'Clothing',
+    //   type: 'Clothing'Item,
     //   args: {
     //     name: nonNull(stringArg()),
     //     type: nonNull(ClothingType),

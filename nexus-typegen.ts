@@ -33,6 +33,7 @@ export interface NexusGenInputs {
 
 export interface NexusGenEnums {
   ClothingType: "boots" | "coat" | "down_jacket" | "dress" | "headwear" | "jacket" | "jeans" | "shirt" | "shorts" | "skirt" | "sneakers" | "sport_pants" | "sunglasses" | "t_shirt"
+  TemperatureUnit: "C" | "F"
 }
 
 export interface NexusGenScalars {
@@ -45,15 +46,25 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Clothing: { // root type
+  ClothingItem: { // root type
+    id: string; // ID!
     imageUrl: string; // String!
+    isLiked?: boolean | null; // Boolean
     name: string; // String!
-    owner: string; // String!
+    ownerId: string; // String!
     type: NexusGenEnums['ClothingType']; // ClothingType!
     weather: string; // String!
   }
   Mutation: {};
   Query: {};
+  User: { // root type
+    avatar?: string | null; // String
+    email: string; // String!
+    id?: string | null; // ID
+    name?: string | null; // String
+    preferences?: Array<NexusGenEnums['ClothingType'] | null> | null; // [ClothingType]
+    temperatureSelection: NexusGenEnums['TemperatureUnit']; // TemperatureUnit!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -67,34 +78,56 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
-  Clothing: { // field return type
+  ClothingItem: { // field return type
+    id: string; // ID!
     imageUrl: string; // String!
+    isLiked: boolean | null; // Boolean
     name: string; // String!
-    owner: string; // String!
+    owner: NexusGenRootTypes['User'] | null; // User
+    ownerId: string; // String!
     type: NexusGenEnums['ClothingType']; // ClothingType!
     weather: string; // String!
   }
   Mutation: { // field return type
-    createItem: NexusGenRootTypes['Clothing']; // Clothing!
+    createItem: NexusGenRootTypes['ClothingItem']; // ClothingItem!
   }
   Query: { // field return type
-    allItems: NexusGenRootTypes['Clothing'][]; // [Clothing!]!
+    allItems: NexusGenRootTypes['ClothingItem'][]; // [ClothingItem!]!
+  }
+  User: { // field return type
+    avatar: string | null; // String
+    email: string; // String!
+    id: string | null; // ID
+    name: string | null; // String
+    preferences: Array<NexusGenEnums['ClothingType'] | null> | null; // [ClothingType]
+    temperatureSelection: NexusGenEnums['TemperatureUnit']; // TemperatureUnit!
   }
 }
 
 export interface NexusGenFieldTypeNames {
-  Clothing: { // field return type name
+  ClothingItem: { // field return type name
+    id: 'ID'
     imageUrl: 'String'
+    isLiked: 'Boolean'
     name: 'String'
-    owner: 'String'
+    owner: 'User'
+    ownerId: 'String'
     type: 'ClothingType'
     weather: 'String'
   }
   Mutation: { // field return type name
-    createItem: 'Clothing'
+    createItem: 'ClothingItem'
   }
   Query: { // field return type name
-    allItems: 'Clothing'
+    allItems: 'ClothingItem'
+  }
+  User: { // field return type name
+    avatar: 'String'
+    email: 'String'
+    id: 'ID'
+    name: 'String'
+    preferences: 'ClothingType'
+    temperatureSelection: 'TemperatureUnit'
   }
 }
 
@@ -103,7 +136,7 @@ export interface NexusGenArgTypes {
     createItem: { // args
       imageUrl: string; // String!
       name: string; // String!
-      owner: string; // String!
+      ownerId: string; // String!
       type: NexusGenEnums['ClothingType']; // ClothingType!
       weather: string; // String!
     }

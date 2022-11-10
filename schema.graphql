@@ -2,10 +2,13 @@
 ### Do not make changes to this file directly
 
 
-type Clothing {
+type ClothingItem {
+  id: ID!
   imageUrl: String!
+  isLiked: Boolean
   name: String!
-  owner: String!
+  owner: User
+  ownerId: String!
   type: ClothingType!
   weather: String!
 }
@@ -33,9 +36,23 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTime
 
 type Mutation {
-  createItem(imageUrl: String!, name: String!, owner: String!, type: ClothingType!, weather: String!): Clothing!
+  createItem(imageUrl: String!, name: String!, ownerId: String!, type: ClothingType!, weather: String!): ClothingItem!
 }
 
 type Query {
-  allItems: [Clothing!]!
+  allItems: [ClothingItem!]!
+}
+
+enum TemperatureUnit {
+  C
+  F
+}
+
+type User {
+  avatar: String
+  email: String!
+  id: ID
+  name: String
+  preferences: [ClothingType]
+  temperatureSelection: TemperatureUnit!
 }

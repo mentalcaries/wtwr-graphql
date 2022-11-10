@@ -1,3 +1,3 @@
-// export * from './User'
-export * from './Clothing';
-export * from './scalars/Date'
+export * from './User';
+export * from './ClothingItem';
+export * from './scalars/Date';
