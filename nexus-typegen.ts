@@ -98,6 +98,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createItem: NexusGenRootTypes['ClothingItem']; // ClothingItem!
+    login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
   }
   Query: { // field return type
@@ -131,6 +132,7 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createItem: 'ClothingItem'
+    login: 'AuthPayload'
     signup: 'AuthPayload'
   }
   Query: { // field return type name
@@ -156,12 +158,16 @@ export interface NexusGenArgTypes {
       type: NexusGenEnums['ClothingType']; // ClothingType!
       weather: string; // String!
     }
+    login: { // args
+      email: string; // String!
+      password: string; // String!
+    }
     signup: { // args
       avatar: string; // String!
       email: string; // String!
       name: string; // String!
       password: string; // String!
-      preferences: Array<string | null>; // [String]!
+      preferences: string[]; // [String!]!
     }
   }
 }
